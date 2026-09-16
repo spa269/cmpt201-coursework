@@ -10,7 +10,7 @@ int main() {
   // error handling if getline() failed
   if (len < 0) {
     perror("getline failed!");
-    free(linePtr); // free the line variable allcated
+    free(linePtr); // free the line variable allocated
     exit(EXIT_FAILURE);
   }
 
@@ -25,5 +25,3 @@ int main() {
   return 0;
 }
 
-// char *saveptr;
-// char *ret = strtok_r(buff, " ", &saveptr);
