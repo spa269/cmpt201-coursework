@@ -30,7 +30,7 @@ int find_best_fit(struct header *free_list_ptr, uint64_t size) {
   struct header *temp = free_list_ptr; // create temp for linked list traversal
   bool isFound = false;
   uint64_t currBestSize = UINT64_MAX;
-  int currBestId = 1;
+  int currBestId = -1;
   while (temp != NULL) {
     if (size <= temp->size) {
       isFound = true;
@@ -50,7 +50,7 @@ int find_best_fit(struct header *free_list_ptr, uint64_t size) {
 int find_worst_fit(struct header *free_list_ptr, uint64_t size) {
   int worst_fit_id = -1;
   struct header *temp = free_list_ptr;
-  int currWorstId = 1;
+  int currWorstId = -1;
   uint64_t maxSize = 0;
   bool isFound = false;
   while (temp != NULL) {
@@ -87,9 +87,9 @@ int main(void) {
   int best_fit_id = find_best_fit(free_list_ptr, 7);
   int worst_fit_id = find_worst_fit(free_list_ptr, 7);
 
-  printf("The ID for Frist-Fit algorithm:%d\n", first_fit_id);
+  printf("The ID for First-Fit algorithm:%d\n", first_fit_id);
   printf("The ID for the Best-Fit algorithm:%d\n", best_fit_id);
-  printf("The ID for the Worst-Fit algorighm:%d\n", worst_fit_id);
+  printf("The ID for the Worst-Fit algorithm:%d\n", worst_fit_id);
   free(free_block1);
   free(free_block2);
   free(free_block3);
@@ -97,3 +97,15 @@ int main(void) {
   free(free_block5);
   return 0;
 }
+
+// pseudo code : coalescing a newley freed block z
+// 1. start with newly freed block Z. browse the free list to find two neighbors
+// a. the free block that exactly ends where Z starts
+// b. the free block that exactly starts where Z ends
+// 2. coalesce based on the result for 1.
+// a. free block is only at before Z : Merge the before block and Z into one block
+// b. free block is only at after Z: Merge the after block and Z into one block(this merged block
+// will take the place the after block's place in the free list)
+// c. free blocks are at both before, after Z: Merge the before, Z, after blocks into one block and
+// remove the after block from the free list
+// d. no free neighbor: just add Z to the free list.
