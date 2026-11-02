@@ -4,7 +4,6 @@
 #include <stdlib.h>
 // task1
 #define ASSERT(expr)                                                                               \
-  \ 
   {                                                                                                \
     if (!(expr)) {                                                                                 \
       fprintf(stderr, "Assertion failed: %s\n", #expr);                                            \
