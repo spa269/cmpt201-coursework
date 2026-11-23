@@ -120,9 +120,15 @@ void *handle_client(void *arg) {
       pthread_mutex_unlock(&count_mutex);
     }
   }
-
+  if (num_read == -1) {
+    perror("read");
+  }
+  if (close(cfd) == -1) {
+    perror("close");
+  }
+  printf("Ending thread for client %d\n", client_id);
+  fflush(stdout);
   // TODO: increase total_message_count per message
-  total_message_count++;
   return NULL;
 }
 
